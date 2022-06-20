@@ -1,0 +1,16 @@
+.attribution {
+    width: 100%;
+    text-align: center;
+    color: var(--blue-grayish);
+    padding: 2rem;
+
+    a {
+        color: var(--blue-grayish);
+        transition: all .3s;
+
+        &:hover {
+            color: var(--blue-dark);
+        }
+    }
+
+}

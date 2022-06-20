@@ -1,0 +1,35 @@
+{
+  "name": "interactive-comments-section",
+  "version": "1.0.0",
+  "description": "Frontend Mentor Project",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack server"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
+    "babel-loader": "^8.2.4",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "json-loader": "^0.5.7",
+    "sass": "^1.49.10",
+    "sass-loader": "^12.6.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.71.0",
+    "webpack-bundle-analyzer": "^4.5.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dr-Wrong-Mo/fem-interactive-comments-section.git"
+  },
+  "author": "Jonathan Wright",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dr-Wrong-Mo/fem-interactive-comments-section/issues"
+  },
+  "homepage": "https://github.com/Dr-Wrong-Mo/fem-interactive-comments-section#readme"
+}

@@ -1,0 +1,60 @@
+.comment {
+  display: grid;
+  // grid-template-columns: min-content auto min-content; // alternative to the follow line. They seem to behave the same.
+  grid-template-columns: min-content minmax(0, 1fr) min-content;
+  align-items: start;
+  gap: 20px;
+
+  max-width: 723px;
+  padding: 24px;
+
+  background-color: var(--white);
+  border-radius: 10px;
+
+  &.response {
+    margin-bottom: 20px;
+  }
+
+  img {
+    height: 2.5rem;
+  }
+
+  textarea {
+    flex-grow: 2;
+    min-height: 72px;
+
+    resize: vertical;
+
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--blue-grayish);
+
+    padding: 10px 2rem;
+
+    border: 1.5px solid var(--gray-light);
+    border-radius: 10px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: 700px) {
+    & {
+      textarea {
+        grid-column: 1 / 4;
+        grid-row: 1 / 2;
+      }
+
+      img {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+
+      button {
+        grid-column: 3 /4;
+        grid-row: 2 / 3;
+      }
+    }
+  }
+}

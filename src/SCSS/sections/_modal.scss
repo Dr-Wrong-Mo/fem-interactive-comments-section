@@ -1,0 +1,33 @@
+.deleteConfirm {
+  --blue-grayish: hsl(211, 10%, 45%);
+  border-radius: 10px;
+  border: none;
+  padding: 2rem;
+
+  .modal {
+    max-width: 330px;
+    margin: auto;
+
+    .title {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--blue-dark);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--blue-grayish);
+      margin-bottom: 1rem;
+    }
+
+    #modalForm {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+  }
+
+  &::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}

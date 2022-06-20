@@ -1,0 +1,167 @@
+.comments {
+  display: flex;
+  flex-direction: column;
+  max-width: 723px;
+
+  &__responded {
+    display: flex;
+
+    &--indent {
+      margin: 0px 41px 20px 41px;
+      border-left: 3px solid var(--gray-light);
+    }
+
+  }
+
+  @media (max-width: 700px) {
+    &__responded {
+      max-width: calc(100vw - 2rem);
+
+      &--indent {
+        & {
+          margin-left: 0;
+          margin-right: 24px;
+        }
+      }
+    }
+  }
+}
+
+.card {
+  background-color: var(--white);
+  display: flex;
+  padding: 24px;
+  border-radius: 10px;
+  position: relative;
+  margin-bottom: 20px;
+
+  .vote {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+
+    border-radius: 10px;
+    margin-right: 24px;
+    padding: 10px 0px;
+    min-width: 38px;
+
+    background-color: var(--gray-very-light);
+    color: var(--blue-moderate);
+    font-weight: 500;
+
+    .score {
+      margin: 1.3rem 0;
+    }
+
+    .minus {
+      margin-bottom: 8px;
+    }
+
+    svg {
+  
+      height: 11px;
+      width: 11px;
+      fill: var(--grayish-light-blue);
+          
+      &:hover {
+        cursor: pointer;
+        fill: var(--blue-moderate);
+      }
+      
+      &.voted {
+        fill: var(--blue-moderate);
+      }
+    
+    }
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+
+    &--user {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      img {
+        height: 2rem;
+        margin-right: 1rem;
+      }
+
+      .username {
+        color: var(--blue-dark);
+        margin-right: 1rem;
+        font-weight: 500;
+      }
+
+      .you {
+        background-color: var(--blue-moderate);
+        border-radius: 3px;
+
+        color: var(--white);
+        font-size: 12px;
+
+        padding: 1px 6px;
+        margin-right: 1rem;
+      }
+
+      .createdOn {
+        color: var(--blue-grayish);
+      }
+    }
+
+    &--comment {
+      color: var(--blue-grayish);
+      line-height: 1.4;
+
+      .tag {
+        font-weight: 500;
+        color: var(--blue-moderate);
+      }
+    }
+  }
+
+  @media (max-width: 700px) {
+    & {
+      flex-direction: column-reverse;
+      padding: 15px;
+
+      .vote {
+        flex-direction: row;
+
+        align-self: flex-start;
+
+        align-items: center;
+        justify-content: space-evenly;
+
+        border-radius: 10px;
+        margin-right: 24px;
+        padding: 10px 10px;
+        min-width: 38px;
+
+        .score {
+          margin: 0 1.3rem;
+        }
+
+        .minus {
+          margin-top: 8px;
+        }
+      }
+
+      &__content {
+        &--comment {
+          margin-bottom: 1rem;
+          line-height: 1.45;
+        }
+      }
+
+      .btns {
+        top: auto;
+        bottom: 28px;
+      }
+    }
+  }
+}
