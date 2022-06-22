@@ -8,4 +8,4 @@ import './import__data';
 // Primary Functions
 import './createPage';
 import './eventListener__main';
-import './event__createNewTopComment'
+import './eventListener__createNewTopComment'

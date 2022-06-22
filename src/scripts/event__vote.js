@@ -4,34 +4,39 @@ let data = JSON.parse(localStorage.getItem('FEM-comments'));
 function voteUp(e) {
   // Declare SVG element that was clicked as parent element
   const parent = e.target.closest('.voteUp');
-
+  
   // Return if click occurred outside of plus icon
   if (parent === null) {
     return null;
   }
-
+  
   // Declares grandparent element (target card). The card ID is needed when comparing it to object data IDs
   const grandparent = parent.parentElement.parentElement.parentElement;
-
+  
   // Declare variables that will be given value
   let jsonComment;
   let ancestor;
-
+  
   // Checks to see if target card is a top level comment. If not, a value is assigned to ancestor
   if (grandparent.classList.contains('reply')) {
     ancestor = grandparent.parentElement.parentElement.previousElementSibling;
   }
-
+  
   // Declare value of jsonComment. Value depends on if target card is top level or a response.
   if (ancestor) {
     // Loop through top level comments, then search subcomments to find matching IDs
     // Assign matching card to jsonComment variable
-    Array.from(data.comments).forEach((array) => {
-      jsonComment = array.replies.find(
-        (el) => `commentID-${el.id}` === grandparent.id
-      );
-    });
-  } else {
+
+    // A while loop was necessary for this loop. A for loop would reset the variable to undefined if there were elements remaining after a match was found.
+    let i = 0
+    while (jsonComment === undefined) {
+      jsonComment = data.comments[i].replies.find(
+        el => `commentID-${el.id}` === grandparent.id
+      )
+      i++
+    }
+
+    } else {
     // Search top level comments for matching IDs
     // Assign matching card to jsonComment variable
     jsonComment = Array.from(data.comments).find(
@@ -93,11 +98,13 @@ function voteDown(e) {
   }
 
   if (ancestor) {
-    Array.from(data.comments).forEach((array) => {
-      jsonComment = array.replies.find(
-        (el) => `commentID-${el.id}` === grandparent.id
-      );
-    });
+    let i = 0
+    while (jsonComment === undefined) {
+      jsonComment = data.comments[i].replies.find(
+        el => `commentID-${el.id}` === grandparent.id
+      )
+      i++
+    }
   } else {
     jsonComment = Array.from(data.comments).find(
       (el) => `commentID-${el.id}` === grandparent.id

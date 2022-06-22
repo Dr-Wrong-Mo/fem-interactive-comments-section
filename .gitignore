@@ -15,3 +15,6 @@
 .DS_Store
 .prettierignore
 node_modules
+*.svg
+z_todo.md
+src/index copy.html
