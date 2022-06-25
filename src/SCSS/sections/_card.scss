@@ -10,7 +10,6 @@
       margin: 0px 41px 20px 41px;
       border-left: 3px solid var(--gray-light);
     }
-
   }
 
   @media (max-width: 700px) {
@@ -60,26 +59,25 @@
     }
 
     svg {
-  
       height: 11px;
       width: 11px;
       fill: var(--grayish-light-blue);
-          
+
       &:hover {
         cursor: pointer;
         fill: var(--blue-moderate);
       }
-      
+
       &.voted {
         fill: var(--blue-moderate);
       }
-    
     }
   }
 
   &__content {
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     &--user {
       display: flex;
@@ -120,6 +118,37 @@
       .tag {
         font-weight: 500;
         color: var(--blue-moderate);
+      }
+
+      .update {
+        display: flex;
+        flex-direction: column;
+
+        textarea {
+          flex-grow: 2;
+          margin-bottom: 20px;
+
+          min-height: 72px;
+
+          resize: vertical;
+
+          font-family: inherit;
+          font-size: 1rem;
+          color: var(--blue-grayish);
+
+          padding: 10px 2rem;
+
+          border: 1.5px solid var(--gray-light);
+          border-radius: 10px;
+
+          &:hover {
+            // cursor: pointer;
+          }
+        }
+
+        button {
+          align-self: end;
+        }
       }
     }
   }

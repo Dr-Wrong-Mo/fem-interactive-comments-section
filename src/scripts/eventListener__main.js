@@ -1,7 +1,7 @@
 // Imports
 import showDeleteModal from './event__showModal'
 import replyToComment from './event__reply'
-import editResponse from './event__edit'
+import {editResponse, confirmEdit} from './event__edit'
 import {voteDown, voteUp} from './event__vote'
 
 
@@ -14,6 +14,7 @@ main.addEventListener('click', function (e) {
     showDeleteModal(e);
     replyToComment(e);
     editResponse(e);
+    confirmEdit(e);
     voteUp(e);
     voteDown(e);
 });

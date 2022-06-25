@@ -1,22 +1,12 @@
+const Comment = require('./class__comment.js')
 const deleteModal = document.getElementById('deleteConfirm');
 let data = JSON.parse(localStorage.getItem('FEM-comments'));
-
-class Comment {
-  constructor(id, user, content, score, createdAt) {
-    this.id = id;
-    this.user = user;
-    this.content = content;
-    this.replies = [];
-    this.score = score
-    this.createdAt = createdAt
-  }
-}
 
 function removeObjectByID(id) {
   let newData = [];
   Array.from(data.comments).forEach((el) => {
     if (el.id !== id) {
-      let newEl = new Comment(el.id, el.user, el.content, el.score, el.createdAt);
+      let newEl = new Comment(el.id, el.user, el.content, el.score, el.createdAt, el.voted);
       newData.push(newEl);
 
       el.replies.forEach((subEl) => {

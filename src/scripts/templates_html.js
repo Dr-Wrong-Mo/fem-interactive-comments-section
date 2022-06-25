@@ -44,7 +44,7 @@ function insertCard(thisComment, level) {
             ${ifUser(thisComment.user.username, currentUserButtons, otherUserButtons)}
             </div>`;
   
-    return commentTemplate + (level === 'top' ? replyTemplate : '');
+    return commentTemplate + (level === 'top' ? replyButtonsTemplate : '');
   }
 
 // Template for edit and delete buttons if comment is by the current user
@@ -76,11 +76,32 @@ const otherUserButtons = `
   </div>`;
 
 // Template for building reply sections under a top level comment
-const replyTemplate = `
+const replyButtonsTemplate = `
   <div class="comments__responded">
   <div class="comments__responded--indent"></div>
   <div class="comments__responded--responses"></div>
 </div>`;
 
+function replyFormTemplate (userImagePath, id) { `
+  <form id="${id}" class="comment response">
+    <img src="${userImagePath}" alt="User Avatar" />
+    <textarea name="comment" id="comment" placeholder="Add a comment&#8230;"></textarea>
+    <button type="submit">REPLY</button>
+  </form>`
+};
 
-  module.exports = { insertCard }
+function editCommentTemplate (content) {
+  return `<div class="update">
+  <textarea name="" class="card__content--editText">${content}</textarea>
+  <button class="confirmEditBtn">UPDATE</button>
+</div>`
+}
+
+function confirmEditTemplate (content) {
+  return `<p>
+  ${content}
+  </p>`
+}
+
+
+module.exports = { insertCard, replyFormTemplate, editCommentTemplate, confirmEditTemplate }
