@@ -3,6 +3,8 @@ const Comment = require('./class__comment.js')
 const newId = require("./createNewIdNumber.js");
 import { insertCard } from "./templates_html";
 
+const newTopCommentForm = document.getElementById('newTopCommentForm')
+
 // Declare DOM and Local Store elements
 const comments = document.getElementById('comments');
 let data = JSON.parse(localStorage.getItem('FEM-comments'));
@@ -14,19 +16,41 @@ let data = JSON.parse(localStorage.getItem('FEM-comments'));
 // The form will be reset
 
 // id, user, content, score, createdAt, voted
-newTopCommentForm.addEventListener('submit', (e) => {
+newTopCommentForm.addEventListener('click', (e) => {
     e.preventDefault();
-    const createNewID = newId.createNewIdNumber(JSON.parse(localStorage.getItem('FEM-comments')))
 
+    let submitted = e.target.localName
+
+    // Validate that the click event occurred on the button
+    if (submitted !== 'button') {
+        return null;
+    }
+
+    // Generate new ID number for data storage and creating an ID for the HTML element
+    const createNewID = newId.createNewIdNumber(JSON.parse(localStorage.getItem('FEM-comments')));
+
+    // Get form input
+    let formContent = newTopCommentForm.querySelector('#comment').value
+
+    // Validate that the form is not empty
+    if (formContent === '') {
+        return null;
+    }
+
+    // Create new comment object
+    let newComment = new Comment(createNewID, data.currentUser, formContent, 1, Date.now(), 1)
+
+    // Add Card to page
     let card = document.createElement('div');
     card.classList.add('comment__group');
     card.setAttribute('id', `commentID-${createNewID}`);
-
-    let newComment = new Comment(createNewID, data.currentUser, e.target[0].value, 1, Date.now(), 1)
-
     card.innerHTML = insertCard(newComment, 'top');
     comments.append(card);
+
+    // Update Local Storage
     data.comments.push(newComment)
     localStorage.setItem('FEM-comments', JSON.stringify(data));
-    e.target[0].value = ''
+
+    // Reset form content to blank
+    newTopCommentForm.querySelector('#comment').value = ''
 })

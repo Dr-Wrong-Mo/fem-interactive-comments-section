@@ -1,26 +1,57 @@
-
 let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
 // Changes default image path to path that Webpack will export
 function updateImagePath(file) {
-    return file.replace('./images/avatars/', './assets/');
-  }
+  return file.replace('./images/avatars/', './assets/');
+}
+
+// User validation method to see if comment is from the current user
+function ifCurrentUser(user, isTrue, isFalse) {
+  return data.currentUser.username === user ? isTrue : isFalse;
+}
+
+// Filters comments to find user callouts and modifies the format by wrapping the callout in a span
+function findCallOut(str) {
   
-  // User validation method to see if comment is from the current user
-  function ifUser(user, isTrue, isFalse) {
-    return data.currentUser.username === user ? isTrue : isFalse;
-  }
+  // This regular expression searching for a string segment that begins with the '@' character, 
+  // and has no alpha numeric characters immediately before it. 
+  // Example: it will return @username, but it will not return user@service.com.
+  const regex = /(^@\w+|[^(a-zA-Z\d)]@\w+)/gi;
+
+  // Build an array from all regular expressions found
+  let arr = [str.match(regex)]
+  
+  // Loop through each comment
+  arr.forEach((comments) => {
+    
+    //Validate that the comment has a regular expression, if not then 
+    if (!comments) {
+      return null
+    }
+    
+    // Loop through each regex in the comment, and wrap it in a span, then update the string
+    comments = comments.forEach(callout => {
+      if (callout.length > 0) {
+        str = str.replace(callout, `<span class="callout">${callout}</span>`)
+      }
+    })
+
+  });
+
+  // Return the string to the requesting function 
+  return str
+}
 
 // Function for inserting card template
 function insertCard(thisComment, level) {
-    const commentTemplate = `
+  const commentTemplate = `
           <div class="card">
             <div class="vote">
-              <svg class="voteUp ${thisComment.voted === 1 ? "voted" : ""}">
+              <svg class="voteUp ${thisComment.voted === 1 ? 'voted' : ''}">
                 <use xlink:href="#plus"/>
               </svg>
               <div class="score">${thisComment.score}</div>
-              <svg class="voteDown ${thisComment.voted === -1 ? "voted" : ""}">
+              <svg class="voteDown ${thisComment.voted === -1 ? 'voted' : ''}">
                 <use xlink:href="#minus"/>
               </svg>
             </div>
@@ -30,22 +61,32 @@ function insertCard(thisComment, level) {
                   thisComment.user.image.png
                 )}" alt="User Avatar" />
                 <div class="username">${thisComment.user.username}</div>
+                ${ifCurrentUser(thisComment.user.username, youTag, '')}
                 <div class="createdOn">${thisComment.createdAt}</div>
               </div>
               <!-- User comment -->
               <div class="card__content--comment">
                 <p>
-                ${thisComment.content}
+                ${findCallOut(thisComment.content)}
                 </p>
               </div>
             </div>
       
             <!-- The following line determines which buttons are injected, button templates are imported from another file -->
-            ${ifUser(thisComment.user.username, currentUserButtons, otherUserButtons)}
+            ${ifCurrentUser(
+              thisComment.user.username,
+              currentUserButtons,
+              otherUserButtons
+            )}
             </div>`;
-  
-    return commentTemplate + (level === 'top' ? replyButtonsTemplate : '');
-  }
+
+  return commentTemplate + (level === 'top' ? replyButtonsTemplate : '');
+}
+
+// Template for tag that is inserted if comment is from current user
+const youTag = `
+  <div class="you">you</div>
+`;
 
 // Template for edit and delete buttons if comment is by the current user
 const currentUserButtons = `
@@ -82,26 +123,32 @@ const replyButtonsTemplate = `
   <div class="comments__responded--responses"></div>
 </div>`;
 
-function replyFormTemplate (userImagePath, id) { `
-  <form id="${id}" class="comment response">
-    <img src="${userImagePath}" alt="User Avatar" />
-    <textarea name="comment" id="comment" placeholder="Add a comment&#8230;"></textarea>
-    <button type="submit">REPLY</button>
-  </form>`
-};
+// HTML template for new element when user replies to another comment
+function replyFormTemplate(userImagePath, originalCommenter) {
+  return `<img src="${userImagePath}" alt="User Avatar" />
+    <textarea name="comment" class="comment__content">@${originalCommenter}</textarea>
+    <button class="btn-addNewReply">REPLY</button>`;
+}
 
-function editCommentTemplate (content) {
+// HTML template when user clicks the edit button group. Existing comment is replaced with text area containing previous content
+function editCommentTemplate(content) {
   return `<div class="update">
   <textarea name="" class="card__content--editText">${content}</textarea>
   <button class="confirmEditBtn">UPDATE</button>
-</div>`
+</div>`;
 }
 
-function confirmEditTemplate (content) {
+// HTML template when user confirms their comment updates. This replaces the div that contained a text area and button
+function confirmEditTemplate(content) {
   return `<p>
-  ${content}
-  </p>`
+  ${findCallOut(content)}
+  </p>`;
 }
 
-
-module.exports = { insertCard, replyFormTemplate, editCommentTemplate, confirmEditTemplate }
+module.exports = {
+  insertCard,
+  replyFormTemplate,
+  editCommentTemplate,
+  confirmEditTemplate,
+  updateImagePath,
+};

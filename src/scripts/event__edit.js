@@ -93,7 +93,7 @@ function updateLocalStorageByID(id, newContent) {
     })
 
     // Update data with updated comments
-    data.comments = updateComments    
+    data.comments = updateComments
     // Update local storage with updated data
     localStorage.setItem('FEM-comments', JSON.stringify(data));
   }

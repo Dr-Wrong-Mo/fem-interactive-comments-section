@@ -10,6 +10,10 @@
       margin: 0px 41px 20px 41px;
       border-left: 3px solid var(--gray-light);
     }
+
+    &--responses {
+      width: 100%;
+    }
   }
 
   @media (max-width: 700px) {
@@ -115,9 +119,14 @@
       color: var(--blue-grayish);
       line-height: 1.4;
 
-      .tag {
+      .callout {
         font-weight: 500;
         color: var(--blue-moderate);
+
+        &:hover {
+          cursor: pointer;
+          color: var(--grayish-light-blue);
+        }
       }
 
       .update {
@@ -140,10 +149,6 @@
 
           border: 1.5px solid var(--gray-light);
           border-radius: 10px;
-
-          &:hover {
-            // cursor: pointer;
-          }
         }
 
         button {
