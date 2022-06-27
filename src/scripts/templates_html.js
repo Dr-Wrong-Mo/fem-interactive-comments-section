@@ -12,34 +12,67 @@ function ifCurrentUser(user, isTrue, isFalse) {
 
 // Filters comments to find user callouts and modifies the format by wrapping the callout in a span
 function findCallOut(str) {
-  
-  // This regular expression searching for a string segment that begins with the '@' character, 
-  // and has no alpha numeric characters immediately before it. 
+  // This regular expression searching for a string segment that begins with the '@' character,
+  // and has no alpha numeric characters immediately before it.
   // Example: it will return @username, but it will not return user@service.com.
   const regex = /(^@\w+|[^(a-zA-Z\d)]@\w+)/gi;
 
   // Build an array from all regular expressions found
-  let arr = [str.match(regex)]
-  
+  let arr = [str.match(regex)];
+
   // Loop through each comment
   arr.forEach((comments) => {
-    
-    //Validate that the comment has a regular expression, if not then 
+    //Validate that the comment has a regular expression, if not then
     if (!comments) {
-      return null
+      return null;
     }
-    
-    // Loop through each regex in the comment, and wrap it in a span, then update the string
-    comments = comments.forEach(callout => {
-      if (callout.length > 0) {
-        str = str.replace(callout, `<span class="callout">${callout}</span>`)
-      }
-    })
 
+    // Loop through each regex in the comment, and wrap it in a span, then update the string
+    comments = comments.forEach((callout) => {
+      if (callout.length > 0) {
+        str = str.replace(callout, `<span class="callout">${callout}</span>`);
+      }
+    });
   });
 
-  // Return the string to the requesting function 
-  return str
+  // Return the string to the requesting function
+  return str;
+}
+
+function modifyTimeStamp(time) {
+  if (typeof time === 'string') {
+    return time;
+  }
+
+  // Convert timestamp into weeks, days, hours, minutes
+  // https://stackoverflow.com/a/13904120/13604562
+  // get total seconds between the times
+  let delta = Math.abs(Date.now() - time) / 1000;
+
+  let weeks = Math.floor(delta / (86400 * 7))
+
+  // calculate (and subtract) whole days
+  let days = Math.floor(delta / 86400);
+  delta -= days * 86400;
+
+  // calculate (and subtract) whole hours
+  let hours = Math.floor(delta / 3600) % 24;
+  delta -= hours * 3600;
+
+  // calculate (and subtract) whole minutes
+  let minutes = Math.floor(delta / 60) % 60;
+  
+  if (minutes < 1) {time = `Just now`}
+  if (minutes === 1) {time = `${minutes} minute ago`}
+  if (minutes >= 2) {time = `${minutes} minutes ago`}
+  if (hours === 1) {time = `${hours} hour ago`}
+  if (hours >= 2) {time = `${hours} hours ago`}
+  if (days === 1) {time = `${days} day ago`}
+  if (days >= 2) {time = `${days} days ago`}
+  if (weeks === 1) {time = `${weeks} week ago`}
+  if (weeks >= 2) {time = `${weeks} weeks ago`}
+
+  return time;
 }
 
 // Function for inserting card template
@@ -62,7 +95,9 @@ function insertCard(thisComment, level) {
                 )}" alt="User Avatar" />
                 <div class="username">${thisComment.user.username}</div>
                 ${ifCurrentUser(thisComment.user.username, youTag, '')}
-                <div class="createdOn">${thisComment.createdAt}</div>
+                <div class="createdOn">${modifyTimeStamp(
+                  thisComment.createdAt
+                )}</div>
               </div>
               <!-- User comment -->
               <div class="card__content--comment">
