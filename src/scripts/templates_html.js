@@ -1,4 +1,3 @@
-let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
 // Changes default image path to path that Webpack will export
 function updateImagePath(file) {
@@ -7,6 +6,7 @@ function updateImagePath(file) {
 
 // User validation method to see if comment is from the current user
 function ifCurrentUser(user, isTrue, isFalse) {
+  let data = JSON.parse(localStorage.getItem('FEM-comments'));
   return data.currentUser.username === user ? isTrue : isFalse;
 }
 

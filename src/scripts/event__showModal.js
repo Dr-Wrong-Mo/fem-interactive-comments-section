@@ -1,8 +1,7 @@
 const Comment = require('./class__comment.js')
 const deleteModal = document.getElementById('deleteConfirm');
-let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
-function removeObjectByID(id) {
+function removeObjectByID(id, data) {
   let newData = [];
   Array.from(data.comments).forEach((el) => {
     if (el.id !== id) {
@@ -22,6 +21,7 @@ function removeObjectByID(id) {
 }
 
 function showDeleteModal(e) {
+  let data = JSON.parse(localStorage.getItem('FEM-comments'));
   const parent = e.target.closest('.dlt');
 
   // Return if click occurred outside of delete button group
@@ -40,7 +40,7 @@ function showDeleteModal(e) {
 
   deleteButton.addEventListener('click', () => {
     grandparent.remove();
-    removeObjectByID(id);
+    removeObjectByID(id, data);
     localStorage.setItem('FEM-comments', JSON.stringify(data));
   });
 }

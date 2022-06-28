@@ -7,7 +7,6 @@ const newTopCommentForm = document.getElementById('newTopCommentForm')
 
 // Declare DOM and Local Store elements
 const comments = document.getElementById('comments');
-let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
 // This function listens for a new top comment submission.
 // A new card will be created with current user data and content from the form
@@ -17,6 +16,7 @@ let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
 // id, user, content, score, createdAt, voted
 newTopCommentForm.addEventListener('click', (e) => {
+    let data = JSON.parse(localStorage.getItem('FEM-comments'));
     e.preventDefault();
 
     let submitted = e.target.localName

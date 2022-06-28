@@ -26,7 +26,7 @@ function editResponse (e) {
     contentArea.innerHTML = editState    
 };
 
-function confirmEdit (e) {
+function confirmEdit (e) {    
     const update = e.target.closest('.confirmEditBtn')
 
     // Checks to see if click event was on an update group. returns if false
@@ -54,6 +54,8 @@ function confirmEdit (e) {
 }
 
 function updateLocalStorageByID(id, newContent) {
+    
+    data = JSON.parse(localStorage.getItem('FEM-comments'));
     // Update value of id parameter to strip away non-numerical values
     id = Number(id.replace('commentID-', ''));
 

@@ -1,7 +1,7 @@
-let data = JSON.parse(localStorage.getItem('FEM-comments'));
-
 // Executes when a click event occurs within a plus icon
 function voteUp(e) {
+  let data = JSON.parse(localStorage.getItem('FEM-comments'));
+  
   // Declare SVG element that was clicked as parent element
   const parent = e.target.closest('.voteUp');
   
@@ -9,6 +9,7 @@ function voteUp(e) {
   if (parent === null) {
     return null;
   }
+
   
   // Declares grandparent element (target card). The card ID is needed when comparing it to object data IDs
   const grandparent = parent.parentElement.parentElement.parentElement;
@@ -26,16 +27,16 @@ function voteUp(e) {
   if (ancestor) {
     // Loop through top level comments, then search subcomments to find matching IDs
     // Assign matching card to jsonComment variable
-
+    
     // A while loop was necessary for this loop. A for loop would reset the variable to undefined if there were elements remaining after a match was found.
     let i = 0
     while (jsonComment === undefined) {
       jsonComment = data.comments[i].replies.find(
         el => `commentID-${el.id}` === grandparent.id
-      )
-      i++
-    }
-
+        )
+        i++
+      }
+      
     } else {
     // Search top level comments for matching IDs
     // Assign matching card to jsonComment variable
@@ -83,6 +84,7 @@ function voteUp(e) {
 
 // See comments from VoteUp. This method does the same, but for the voteDown button.
 function voteDown(e) {
+  let data = JSON.parse(localStorage.getItem('FEM-comments'));
   const parent = e.target.closest('.voteDown');
 
   if (parent === null) {

@@ -1,7 +1,6 @@
 const Comment = require('./class__comment.js')
 const template = require("./templates_html.js");
 const newId = require("./createNewIdNumber.js");
-let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
 // This needs an event listener with type "submit" instead of click
 
@@ -11,13 +10,14 @@ function insertNewReplyForm (e) {
     if (!parent) {
         return
     }
+    let data = JSON.parse(localStorage.getItem('FEM-comments'));
     
     // Finds parent of top level comment
     const ancestor = e.target.closest('.comment__group')
     const responseGroup = e.target.closest('.comments__responded--responses')
     let imagePath = template.updateImagePath(data.currentUser.image.png)
     let originalCommenter = parent.closest('.card').getElementsByClassName('username')[0].innerHTML
-
+    
     let newForm = document.createElement('form');
     newForm.classList.add("comment");
     newForm.classList.add("response");
@@ -34,18 +34,19 @@ function insertNewReplyForm (e) {
     } else {
         parent.closest('.reply').after(newForm)
     }
-
+    
 };
 
 function addNewReply (e) {
     e.preventDefault()
+    let data = JSON.parse(localStorage.getItem('FEM-comments'));
     const parent = e.target.closest('.btn-addNewReply');
-
+    
     // Validates that click event was on an edit button group. returns if false
     if (!parent) {
         return
     }
-
+    
     const grandparent = e.target.closest(".comment")
     const ancestorID = Number(e.target.closest('.comment__group').getAttribute('id').replace('commentID-', ''))
     const commentValue = e.target.closest('.comment').getElementsByClassName("comment__content")[0].value
