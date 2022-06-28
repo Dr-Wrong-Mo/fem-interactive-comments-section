@@ -1,6 +1,5 @@
 // Executes when a click event occurs within a plus icon
 function voteUp(e) {
-  let data = JSON.parse(localStorage.getItem('FEM-comments'));
   
   // Declare SVG element that was clicked as parent element
   const parent = e.target.closest('.voteUp');
@@ -9,6 +8,7 @@ function voteUp(e) {
   if (parent === null) {
     return null;
   }
+  let data = JSON.parse(localStorage.getItem('FEM-comments'));
 
   
   // Declares grandparent element (target card). The card ID is needed when comparing it to object data IDs
@@ -84,13 +84,13 @@ function voteUp(e) {
 
 // See comments from VoteUp. This method does the same, but for the voteDown button.
 function voteDown(e) {
-  let data = JSON.parse(localStorage.getItem('FEM-comments'));
   const parent = e.target.closest('.voteDown');
-
+  
   if (parent === null) {
     return null;
   }
-
+  let data = JSON.parse(localStorage.getItem('FEM-comments'));
+  
   const grandparent = parent.parentElement.parentElement.parentElement;
 
   let jsonComment;
