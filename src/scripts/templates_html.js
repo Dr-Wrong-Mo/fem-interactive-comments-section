@@ -99,15 +99,12 @@ function insertCard(thisComment, level) {
                   thisComment.createdAt
                 )}</div>
               </div>
-              <!-- User comment -->
               <div class="card__content--comment">
                 <p>
                 ${findCallOut(thisComment.content)}
                 </p>
               </div>
             </div>
-      
-            <!-- The following line determines which buttons are injected, button templates are imported from another file -->
             ${ifCurrentUser(
               thisComment.user.username,
               currentUserButtons,
