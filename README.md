@@ -80,7 +80,6 @@ This is not the intended behavior that I understand dialog to have. It should be
 <br><br>
 The issue, IK found, was CSS styling I had added to the dialog box. When I removed `display: flex`, the behavior returned to normal.
 In it's default non-active state, the dialog element should have a box model property of `display: none`. Adding `display: flex` in CSS will give it a box model property of `display: block`. This change makes the dialog element visible when it is in a non-active state.
-<br>
 1. I later ran into some issues dynamically loading the replies to top level comments to the DOM. I was trying to add them as a sibling to the comment at the same time that I was adding the comment. I wanted to imitate the way that I can add a forEach loop in Angular to loop through all instances of a child. I simply couldn't get a loop to work with a template literal. The approach I took was to wait for all top level comments to be added, loop through them a second time to find the related replies, and add those replies during that second stage. I don't believe this would be the most performative, and I don't expect it would not scale well, but it seemed to be a decent solution for the size of this project.<br>
 1. Once I had my replies loading correctly, I wanted to test the event listener that I had on my delete buttons, to ensure the modal was still responding. Spoiler alert: it was not working.
 <br><br>
